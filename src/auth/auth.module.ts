@@ -2,15 +2,13 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserModule } from 'src/users/users.module';
-import { QrsModule } from 'src/qrs/qrs.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
-import { PassportModule } from '@nestjs/passport';
-import { QrsService } from 'src/qrs/qrs.service';
+require('dotenv').config();
 
 @Module({
     imports: [UserModule, JwtModule.register({
-        secret: 'somesecretthings'
+        secret: process.env.SECRET_TOKEN
     })],
     providers: [AuthService, JwtStrategy],
     controllers: [AuthController]

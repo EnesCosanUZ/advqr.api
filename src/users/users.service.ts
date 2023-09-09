@@ -24,7 +24,7 @@ export class UserService {
     }
 
     async getUser(id: number): Promise<User> {
-        const user = await this.userRepository.findOne({ where: { id }, relations: ['qrs']}); // QR kodları ile birlikte getir
+        const user = await this.userRepository.findOne({ where: { id }, relations: ['qrs']});
 
         if(!user) throw new NotFoundException("User Not Found!");
 
@@ -32,7 +32,7 @@ export class UserService {
     }
 
     async getUserByUsername(username: string): Promise<User> {
-        const user = await this.userRepository.findOne({ where: { username }})
+        const user = await this.userRepository.findOne({ where: { username }, relations: ['qrs']})
         
         if(!user) throw new NotFoundException("User Not Found!");
 

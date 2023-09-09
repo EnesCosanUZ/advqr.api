@@ -29,7 +29,7 @@ export class QrsService {
     }
 
     getAllQrs(): Promise<QR[]> {
-        return this.qrRepository.find();
+        return this.qrRepository.find({relations: ['user']});
     }
 
     async insertQr(createQRDto: CreateQRDto): Promise<QR> {

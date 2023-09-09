@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/users/users.service';
 import { QrsService } from 'src/qrs/qrs.service';
 import { JwtService } from '@nestjs/jwt';
@@ -36,7 +36,16 @@ export class AuthService {
             userType: UserType.Default
         }
 
-        return this.userService.insertUser(user);
+        try {
+            const existingUser = await this.userService.getUserByUsername(username);
+            if (existingUser) {
+              return 'user exists';
+            }
+        } catch (error) {
+            if (error instanceof NotFoundException) {
+              return this.userService.insertUser(user);
+            }
+        }
 
     }
 

@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 import { UserService } from "./users.service";
@@ -36,11 +36,16 @@ export class UserController {
         return this.userService.insertUser(createUserDto);
     }
 
-    @UseGuards(AuthGuard('jwt'), RoleGuard)
-    @Role('admin', 'moderator')
-    @Get(':id')
-    getUser(@Param('id') id: number) {
-        return this.userService.getUser(id);
+    // @UseGuards(AuthGuard('jwt'), RoleGuard)
+    // @Role('admin', 'moderator')
+    // @Get(':id')
+    // getUser(@Param('id') id: number) {
+    //     return this.userService.getUser(id);
+    // }
+
+    @Get(':username')
+    getUserByUsername(@Param('username') username:string) {
+        return this.userService.getUserByUsername(username)
     }
     
     @UseGuards(AuthGuard('jwt'), RoleGuard)
